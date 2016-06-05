@@ -12,6 +12,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
+import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import tdlm.data.DataManager;
 import tdlm.gui.Workspace;
@@ -19,6 +20,7 @@ import saf.AppTemplate;
 import saf.ui.AppMessageDialogSingleton;
 import saf.ui.AppYesNoCancelDialogSingleton;
 import tdlm.data.ToDoItem;
+import tdlm.dialog.AddYesNoCancel;
 
 /**
  * This class responds to interactions with todo list editing controls.
@@ -37,8 +39,10 @@ public class ToDoListController {
 	// ENABLE/DISABLE THE PROPER BUTTONS
 	Workspace workspace = (Workspace)app.getWorkspaceComponent();
 	workspace.reloadWorkspace();
-        AppYesNoCancelDialogSingleton myDiag = AppYesNoCancelDialogSingleton.getSingleton();
-        myDiag.show("new item", "new item");
+        AddYesNoCancel myDiag = AddYesNoCancel.getSingleton();
+        Stage newStage = new Stage();
+        myDiag.init(newStage);
+        myDiag.show("new item");
         ToDoItem myItem = new ToDoItem();
     }
     
