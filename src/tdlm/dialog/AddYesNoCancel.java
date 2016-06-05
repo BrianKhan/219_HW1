@@ -15,6 +15,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 
@@ -32,8 +35,33 @@ public class AddYesNoCancel extends Stage {
     
     // GUI CONTROLS FOR OUR DIALOG
     VBox messagePane;
+    
+    HBox catBox;
+    HBox descriptionBox;
+    HBox startBox;
+    HBox endBox;
+    HBox completedBox;
+    
+    CheckBox checkField;
+    
+    TextField catField;
+    TextField descriptionField;
+   // TextField startField;
+   // TextField endField;
+    DatePicker startDate;
+    DatePicker endDate;
+    
+    
+    
     Scene messageScene;
-    Label messageLabel;
+    
+    
+    Label categoryLabel;
+    Label descriptionLabel;
+    Label startLabel;
+    Label endLabel;
+    Label completedLabel;
+    
     Button yesButton;
     Button noButton;
     Button cancelButton;
@@ -84,12 +112,32 @@ public class AddYesNoCancel extends Stage {
     public void init(Stage primaryStage) {
         // MAKE THIS DIALOG MODAL, MEANING OTHERS WILL WAIT
         // FOR IT WHEN IT IS DISPLAYED
-        initModality(Modality.WINDOW_MODAL);
-        initOwner(primaryStage);
+        // CHANGED SO THAT WE ONLY SET THIS WINDOW MODAL ONCE, AS WE 
+        // CAN ONLY INITIALIZE IN OUR WORKSPACE CLASS EACH TIME WE HIT THE BUTTON
         
-        // LABEL TO DISPLAY THE CUSTOM MESSAGE
-        messageLabel = new Label("test");        
-
+        if(primaryStage.getModality().toString() != "NONE") {
+            
+        initModality(Modality.WINDOW_MODAL);
+        
+        initOwner(primaryStage);
+        }
+        // LABELS AND TEXT FIELDS
+        categoryLabel = new Label("Category");        
+        descriptionLabel = new Label("Description");
+        startLabel = new Label("Start Date");
+        endLabel = new Label("End Date");
+        completedLabel = new Label("Completed?");
+        
+        catField = new TextField();
+        descriptionField = new TextField();
+        
+       // startField = new TextField();
+       // endField = new TextField();
+        startDate = new DatePicker();
+        endDate = new DatePicker();
+        checkField  = new  CheckBox();
+        
+        
         // YES, NO, AND CANCEL BUTTONS
         yesButton = new Button(YES);
         noButton = new Button(NO);
@@ -106,7 +154,35 @@ public class AddYesNoCancel extends Stage {
         yesButton.setOnAction(yesNoCancelHandler);
         noButton.setOnAction(yesNoCancelHandler);
         cancelButton.setOnAction(yesNoCancelHandler);
-
+        
+        // CATEGORY HBOX
+        catBox = new HBox();
+        catBox.getChildren().add(categoryLabel);
+        catBox.getChildren().add(catField = new TextField());
+        
+        // DESCRIPTION HBOX
+        descriptionBox = new HBox();
+        descriptionBox.getChildren().add(descriptionLabel);
+        descriptionBox.getChildren().add(descriptionField);
+        
+        // START HBOX
+        startBox = new HBox();
+        startBox.getChildren().add(startLabel);
+       // startBox.getChildren().add(startField);
+       startBox.getChildren().add(startDate);
+        
+        // END HBOX
+        endBox = new HBox();
+        endBox.getChildren().add(endLabel);
+       // endBox.getChildren().add(endField);
+       endBox.getChildren().add(endDate);
+        
+        // COMPLETED HBOX
+        completedBox = new HBox();
+        completedBox.getChildren().add(completedLabel);
+        completedBox.getChildren().add(checkField);
+        
+        
         // NOW ORGANIZE OUR BUTTONS
         HBox buttonBox = new HBox();
         buttonBox.getChildren().add(yesButton);
@@ -116,7 +192,12 @@ public class AddYesNoCancel extends Stage {
         // WE'LL PUT EVERYTHING HERE
         messagePane = new VBox();
         messagePane.setAlignment(Pos.CENTER);
-        messagePane.getChildren().add(messageLabel);
+        messagePane.getChildren().add(catBox);
+        messagePane.getChildren().add(descriptionBox);
+        messagePane.getChildren().add(startBox);
+        messagePane.getChildren().add(endBox);
+        messagePane.getChildren().add(completedBox);
+        
         messagePane.getChildren().add(buttonBox);
         
         // MAKE IT LOOK NICE
@@ -157,5 +238,14 @@ public class AddYesNoCancel extends Stage {
 	// WAITS FOR IT TO BE RESOLVED BEFORE LETTING THE USER
 	// DO MORE WORK.
         showAndWait();
+        
+        // CHECK TO SEE IF OUR FIELDS ARE EMPTY
+        // CREATE TODO ITEM IF USER CLICKS YES
+        if(catField.getText() != null && !catField.getText().isEmpty() && descriptionField.getText() != null && !descriptionField.getText().isEmpty() && startDate.getValue().toString() != "" && endDate.getValue().toString() != "") {
+           // System.out.println("Category value = " +catField.getText());
+           // System.out.println("description value = " +descriptionField.getText());
+           // System.out.println("start value = " +startDate.getValue().toString());
+            // System.out.println("end value = " +endDate.getValue().toString());
+        }
     }
 }

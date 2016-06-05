@@ -30,9 +30,11 @@ import tdlm.dialog.AddYesNoCancel;
  */
 public class ToDoListController {
     AppTemplate app;
-    
+    AddYesNoCancel myDiag;
     public ToDoListController(AppTemplate initApp) {
 	app = initApp;
+        
+        
     }
     
     public void processAddItem() {	
@@ -42,7 +44,7 @@ public class ToDoListController {
         AddYesNoCancel myDiag = AddYesNoCancel.getSingleton();
         Stage newStage = new Stage();
         myDiag.init(newStage);
-        myDiag.show("new item");
+        myDiag.show("New ToDo Item");
         ToDoItem myItem = new ToDoItem();
     }
     
