@@ -32,6 +32,7 @@ import static saf.settings.AppStartupConstants.FILE_PROTOCOL;
 import static saf.settings.AppStartupConstants.PATH_IMAGES;
 import tdlm.PropertyType;
 import tdlm.data.ToDoItem;
+import tdlm.dialog.AddYesNoCancel;
 
 /**
  * This class serves as the workspace component for this application, providing
@@ -93,6 +94,7 @@ public class Workspace extends AppWorkspaceComponent {
     // HERE ARE OUR DIALOGS
     AppMessageDialogSingleton messageDialog;
     AppYesNoCancelDialogSingleton yesNoCancelDialog;
+    AddYesNoCancel myDiag;
     
     // FOR DISPLAYING DEBUG STUFF
     Text debugText;
@@ -118,6 +120,11 @@ public class Workspace extends AppWorkspaceComponent {
         
         // AND SETUP EVENT HANDLING
 	setupHandlers();
+        
+        // WE INITIALIZE OUR DIALOG
+        myDiag = AddYesNoCancel.getSingleton();
+        myDiag.init(gui.getWindow());
+        
     }
     
     private void layoutGUI() {

@@ -20,6 +20,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
+import tdlm.data.ToDoItem;
 
 /**
  * This class is heavily based on AppYesNoCancelDialogSingleton 
@@ -51,7 +52,7 @@ public class AddYesNoCancel extends Stage {
     DatePicker startDate;
     DatePicker endDate;
     
-    
+    ToDoItem myItem;
     
     Scene messageScene;
     
@@ -227,6 +228,10 @@ public class AddYesNoCancel extends Stage {
      * 
      * 
      */
+    public ToDoItem getToDo() {
+        return myItem;
+    }
+    
     public void show(String title) {
 	// SET THE DIALOG TITLE BAR TITLE
 	setTitle(title);
@@ -241,11 +246,12 @@ public class AddYesNoCancel extends Stage {
         
         // CHECK TO SEE IF OUR FIELDS ARE EMPTY
         // CREATE TODO ITEM IF USER CLICKS YES
-        if(catField.getText() != null && !catField.getText().isEmpty() && descriptionField.getText() != null && !descriptionField.getText().isEmpty() && startDate.getValue().toString() != "" && endDate.getValue().toString() != "") {
+        if(getSelection() == YES &&catField.getText() != null && !catField.getText().isEmpty() && descriptionField.getText() != null && !descriptionField.getText().isEmpty() && startDate.getValue().toString() != "" && endDate.getValue().toString() != "") {
            // System.out.println("Category value = " +catField.getText());
            // System.out.println("description value = " +descriptionField.getText());
            // System.out.println("start value = " +startDate.getValue().toString());
             // System.out.println("end value = " +endDate.getValue().toString());
+            myItem = new ToDoItem(catField.getText(),descriptionField.getText(),startDate.getValue(),endDate.getValue(), checkField.isSelected());
         }
     }
 }

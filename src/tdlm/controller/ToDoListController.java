@@ -45,7 +45,13 @@ public class ToDoListController {
         Stage newStage = new Stage();
         myDiag.init(newStage);
         myDiag.show("New ToDo Item");
-        ToDoItem myItem = new ToDoItem();
+        ToDoItem myToDo;
+        DataManager manager = (DataManager)app.getDataComponent();
+        if(myDiag.getSelection() == "Yes") {
+            myToDo = myDiag.getToDo();
+            manager.addItem(myToDo);
+        }
+        
     }
     
     public void processRemoveItem() {
