@@ -123,6 +123,7 @@ public class Workspace extends AppWorkspaceComponent {
         
         // WE INITIALIZE OUR DIALOG
         myDiag = AddYesNoCancel.getSingleton();
+        
         myDiag.init(gui.getWindow());
         
     }

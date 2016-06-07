@@ -14,11 +14,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
+import properties_manager.PropertiesManager;
 import tdlm.data.DataManager;
 import tdlm.gui.Workspace;
 import saf.AppTemplate;
 import saf.ui.AppMessageDialogSingleton;
 import saf.ui.AppYesNoCancelDialogSingleton;
+import tdlm.PropertyType;
 import tdlm.data.ToDoItem;
 import tdlm.dialog.AddYesNoCancel;
 
@@ -31,25 +33,30 @@ import tdlm.dialog.AddYesNoCancel;
 public class ToDoListController {
     AppTemplate app;
     AddYesNoCancel myDiag;
+    PropertiesManager props;
     public ToDoListController(AppTemplate initApp) {
 	app = initApp;
+        props = PropertiesManager.getPropertiesManager();
         
         
     }
     
     public void processAddItem() {	
 	// ENABLE/DISABLE THE PROPER BUTTONS
+        
 	Workspace workspace = (Workspace)app.getWorkspaceComponent();
 	workspace.reloadWorkspace();
         AddYesNoCancel myDiag = AddYesNoCancel.getSingleton();
         Stage newStage = new Stage();
         myDiag.init(newStage);
-        myDiag.show("New ToDo Item");
+           
+        myDiag.show(props.getProperty(PropertyType.ADD_TITLE));
         ToDoItem myToDo;
         DataManager manager = (DataManager)app.getDataComponent();
-        if(myDiag.getSelection() == "Yes") {
+        if(myDiag.getSelection().compareToIgnoreCase(props.getProperty(PropertyType.YES)) ==0) {
             myToDo = myDiag.getToDo();
             manager.addItem(myToDo);
+        } else {
         }
         
     }

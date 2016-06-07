@@ -20,6 +20,8 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
+import properties_manager.PropertiesManager;
+import tdlm.PropertyType;
 import tdlm.data.ToDoItem;
 
 /**
@@ -67,18 +69,15 @@ public class AddYesNoCancel extends Stage {
     Button noButton;
     Button cancelButton;
     String selection;
-    
+    PropertiesManager props;
+    String YES;
+    String NO;
     // CONSTANT CHOICES
 
     /**
      *
      */
-        public static final String YES = "Yes";
-
-    /**
-     *
-     */
-    public static final String NO = "No";
+    
 
     /**
      *
@@ -91,7 +90,11 @@ public class AddYesNoCancel extends Stage {
      * 
      * @param primaryStage The owner of this modal dialog.
      */
-    private AddYesNoCancel() {}
+    private AddYesNoCancel() {
+        props = PropertiesManager.getPropertiesManager();
+        YES = props.getProperty(PropertyType.YES);
+        NO = props.getProperty(PropertyType.NO);
+    }
     
     /**
      * The static accessor method for this singleton.
@@ -123,11 +126,11 @@ public class AddYesNoCancel extends Stage {
         initOwner(primaryStage);
         }
         // LABELS AND TEXT FIELDS
-        categoryLabel = new Label("Category");        
-        descriptionLabel = new Label("Description");
-        startLabel = new Label("Start Date");
-        endLabel = new Label("End Date");
-        completedLabel = new Label("Completed?");
+        categoryLabel = new Label(props.getProperty(PropertyType.CATEGORY));        
+        descriptionLabel = new Label(props.getProperty(PropertyType.DESCRIPTION));
+        startLabel = new Label(props.getProperty(PropertyType.START_DATE));
+        endLabel = new Label(props.getProperty(PropertyType.END_DATE));
+        completedLabel = new Label(props.getProperty(PropertyType.COMPLETED));
         
         catField = new TextField();
         descriptionField = new TextField();
@@ -204,9 +207,12 @@ public class AddYesNoCancel extends Stage {
         // MAKE IT LOOK NICE
         messagePane.setPadding(new Insets(10, 20, 20, 20));
         messagePane.setSpacing(10);
+        
 
         // AND PUT IT IN THE WINDOW
         messageScene = new Scene(messagePane);
+        this.setWidth(350);
+        this.setHeight(250);
         this.setScene(messageScene);
     }
 

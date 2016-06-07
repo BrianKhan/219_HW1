@@ -12,6 +12,18 @@
 	<property name="APP_LOGO"	    value="ToDoListMakerLogo.png"></property>
 	<property name="APP_PATH_CSS"	    value="css/"></property>
 	<property name="APP_CSS"	    value="tdlm_style.css"></property>
+        <!-- Dailog Box -->
+        <property name="ADD_TITLE"          value="New ToDo Item"></property>
+        <property name="YES"                value="Yes"></property>
+        <property name="NO"                 value="No"></property>
+        <property name="CANCEL"             value="Cancel"></property>
+        <property name="CATEGORY"                  value="Category: "></property>
+        <property name="DESCRIPTION"                  value="Description: "></property>
+        <property name="START_DATE"                  value="Start Date: "></property>
+        <property name="END_DATE"                  value="End Date: "></property>
+        <property name="COMPLETED"                  value="Completed? "></property>
+        
+
         
         <!-- PROGRAM ICON FILES -->
         <property name="NEW_ICON"	    value="New.png"></property>
