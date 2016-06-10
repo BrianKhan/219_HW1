@@ -49,8 +49,6 @@ public class AddYesNoCancel extends Stage {
     
     TextField catField;
     TextField descriptionField;
-   // TextField startField;
-   // TextField endField;
     DatePicker startDate;
     DatePicker endDate;
     
@@ -67,7 +65,6 @@ public class AddYesNoCancel extends Stage {
     
     Button yesButton;
     Button noButton;
-  //  Button cancelButton;
     String selection;
     PropertiesManager props;
     String YES;
@@ -137,8 +134,6 @@ public class AddYesNoCancel extends Stage {
         catField = new TextField();
         descriptionField = new TextField();
         
-       // startField = new TextField();
-       // endField = new TextField();
         startDate = new DatePicker();
         endDate = new DatePicker();
         checkField  = new  CheckBox();
@@ -203,12 +198,14 @@ public class AddYesNoCancel extends Stage {
         messagePane.getChildren().add(startBox);
         messagePane.getChildren().add(endBox);
         messagePane.getChildren().add(completedBox);
+        buttonBox.setAlignment(Pos.CENTER);
         
         messagePane.getChildren().add(buttonBox);
         
         // MAKE IT LOOK NICE
         messagePane.setPadding(new Insets(10, 20, 20, 20));
         messagePane.setSpacing(10);
+        
         
 
         // AND PUT IT IN THE WINDOW
@@ -228,6 +225,14 @@ public class AddYesNoCancel extends Stage {
         return selection;
     }
  
+    
+    //some methods to get our todos and our boolean
+    public ToDoItem getToDo() {
+        return myItem;
+    }
+    public boolean getToDid() {
+        return toDid;
+    }
     /**
      * This method loads a custom message into the label
      * then pops open the dialog.
@@ -236,13 +241,6 @@ public class AddYesNoCancel extends Stage {
      * 
      * 
      */
-    public ToDoItem getToDo() {
-        return myItem;
-    }
-    public boolean getToDid() {
-        return toDid;
-    }
-    
     public void show(String title) {
 	// SET THE DIALOG TITLE BAR TITLE
 	setTitle(title);

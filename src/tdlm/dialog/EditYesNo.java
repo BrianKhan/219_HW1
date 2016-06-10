@@ -25,8 +25,8 @@ import tdlm.PropertyType;
 import tdlm.data.ToDoItem;
 
 /**
- * This class is heavily based on AppYesNoCancelDialogSingleton 
- * with changes made to it to allow for a custom add function
+ * This class is heavily based on AddYesNoCancel 
+ * with changes made to it to allow for a custom edit function
  * 
  * @author Richard McKenna
  * @author Brian Khaneyan
@@ -211,6 +211,7 @@ public class EditYesNo extends Stage {
         // MAKE IT LOOK NICE
         messagePane.setPadding(new Insets(10, 20, 20, 20));
         messagePane.setSpacing(10);
+        buttonBox.setAlignment(Pos.CENTER);
         
 
         // AND PUT IT IN THE WINDOW

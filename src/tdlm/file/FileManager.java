@@ -40,6 +40,7 @@ import tdlm.gui.Workspace;
  * providing all I/O services.
  *
  * @author Richard McKenna
+ * @author Brian Khaneyan
  * @version 1.0
  */
 public class FileManager implements AppFileComponent {
@@ -72,9 +73,7 @@ public class FileManager implements AppFileComponent {
     public void saveData(AppDataComponent data, String filePath) throws IOException {
 	// GET THE DATA
 	DataManager dataManager = (DataManager)data;
-        Workspace workspace = dataManager.getWorkspace();
-      //  dataManager.setOwner(dataManager.getWorkspace().getName());
-	//dataManager.getWorkspace().setFields(JSON_NAME, JSON_NAME);
+      
 	// FIRST THE LIST NAME AND OWNER
         if(dataManager.getName() == "" || dataManager.getOwner() == "") {
             props = PropertiesManager.getPropertiesManager();
@@ -155,6 +154,7 @@ public class FileManager implements AppFileComponent {
 	String owner = json.getString(JSON_OWNER);
 	// AND NOW LOAD ALL THE ITEMS
 	JsonArray jsonItemArray = json.getJsonArray(JSON_ITEMS);
+        //we set the name and owner
         dataManager.setName(name);
         dataManager.setOwner(owner);
         dataManager.changed(true);

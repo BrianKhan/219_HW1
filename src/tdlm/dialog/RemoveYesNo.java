@@ -25,8 +25,8 @@ import tdlm.PropertyType;
 import tdlm.data.ToDoItem;
 
 /**
- * This class is heavily based on AppYesNoCancelDialogSingleton 
- * with changes made to it to allow for a custom add function
+ * This class is heavily based on AddYesNoCancel 
+ * with changes made to it to allow for a simple dialog
  * 
  * @author Richard McKenna
  * @author Brian Khaneyan

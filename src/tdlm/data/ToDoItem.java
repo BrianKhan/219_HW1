@@ -13,8 +13,10 @@ import javafx.beans.property.StringProperty;
 /**
  *
  * @author McKillaGorilla
+ * @author GenghisKhan
  */
 public class ToDoItem {
+    //Various self explanatory methods added
     public static final String DEFAULT_CATEGORY = "?";
     public static final String DEFAULT_DESCRIPTION = "?";
     public static final LocalDate DEFAULT_DATE = LocalDate.now();

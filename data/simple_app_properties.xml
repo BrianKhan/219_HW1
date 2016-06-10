@@ -17,10 +17,10 @@
         <property name="YES"                value="Yes"></property>
         <property name="NO"                 value="No"></property>
         <property name="CANCEL"             value="Cancel"></property>
-        <property name="CATEGORY"                  value="Category: "></property>
+        <property name="CATEGORY"                  value="Category:     "></property>
         <property name="DESCRIPTION"                  value="Description: "></property>
-        <property name="START_DATE"                  value="Start Date: "></property>
-        <property name="END_DATE"                  value="End Date: "></property>
+        <property name="START_DATE"                  value="Start Date:    "></property>
+        <property name="END_DATE"                  value="End Date:     "></property>
         <property name="COMPLETED"                  value="Completed? "></property>
         <property name="USER_DENIED"                value="User Denied"></property>
         <property name="NO_WORK"                value="We did not make or change a ToDo Item, please fill all fields"></property>

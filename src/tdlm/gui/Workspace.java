@@ -39,6 +39,7 @@ import tdlm.dialog.AddYesNoCancel;
  * the user interface controls for editing work.
  *
  * @author Richard McKenna
+ * @author Brian Khaneyan
  * @version 1.0
  */
 public class Workspace extends AppWorkspaceComponent {
@@ -224,6 +225,7 @@ public class Workspace extends AppWorkspaceComponent {
 	
 	// NOW CONNECT THE BUTTONS TO THEIR HANDLERS
         DataManager dataManager = (DataManager)app.getDataComponent();
+        //we add item, and check if we should disable any buttons
         addItemButton.setOnAction(e->{
             toDoListController.processAddItem();
             toDoListController.checkDisables(itemsTable.getSelectionModel().getSelectedItem());
@@ -231,25 +233,28 @@ public class Workspace extends AppWorkspaceComponent {
             
             
         });
+        //we remove item, and check if we should disable any buttons
         removeItemButton.setOnAction(e->{
             toDoListController.processRemoveItem(itemsTable.getSelectionModel().getSelectedItem());
             toDoListController.checkDisables(itemsTable.getSelectionModel().getSelectedItem());
             changed = true;
             
         });
+        //we move item, do checks
         moveUpItemButton.setOnAction(e->{
             toDoListController.processMoveUpItem(itemsTable.getSelectionModel().getSelectedItem());
             toDoListController.checkDisables(itemsTable.getSelectionModel().getSelectedItem());
             changed = true;
             
         });
+        // we move item, do checks
         moveDownItemButton.setOnAction(e->{
             toDoListController.processMoveDownItem(itemsTable.getSelectionModel().getSelectedItem());
             toDoListController.checkDisables(itemsTable.getSelectionModel().getSelectedItem());
             changed = true;
             
         });
-        
+        //each time the user makes a click we want to check if we should disable any buttons
         itemsTable.setOnMouseClicked(e -> {
             toDoListController.checkDisables(itemsTable.getSelectionModel().getSelectedItem());
             if (e.getClickCount() == 2) {
@@ -260,7 +265,7 @@ public class Workspace extends AppWorkspaceComponent {
             }
             
         });
-        
+        //whenever the mouse is moved we give info to our datamanager, no file is saved until the save button is pressed
         gui.getPrimaryScene().setOnMouseMoved(e-> {
                 dataManager.setName(nameTextField.getText().toString());
                 dataManager.setOwner(ownerTextField.getText().toString());
@@ -275,6 +280,7 @@ public class Workspace extends AppWorkspaceComponent {
         
      
     }
+    //methods for enabling and disabling buttons
     public void enableRemove() {
         removeItemButton.setDisable(false);
     }
@@ -348,6 +354,10 @@ public class Workspace extends AppWorkspaceComponent {
         ownerLabel.getStyleClass().add(CLASS_PROMPT_LABEL);
         itemsBox.getStyleClass().add(CLASS_BORDERED_PANE);
         itemsLabel.getStyleClass().add(CLASS_SUBHEADING_LABEL);
+        
+        
+        
+       
     }
 
     /**

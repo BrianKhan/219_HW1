@@ -30,6 +30,7 @@ import tdlm.dialog.RemoveYesNo;
  * This class responds to interactions with todo list editing controls.
  * 
  * @author McKillaGorilla
+ * @author GenghisKhan
  * @version 1.0
  */
 public class ToDoListController {
@@ -42,10 +43,9 @@ public class ToDoListController {
 	app = initApp;
         props = PropertiesManager.getPropertiesManager();
     }
-    
+    //Adds item, checks to see if we should enable save, remove etc
     public void processAddItem() {	
 	// ENABLE/DISABLE THE PROPER BUTTONS
-        
 	Workspace workspace = (Workspace)app.getWorkspaceComponent();
 	workspace.reloadWorkspace();
         AddYesNoCancel myDiag = AddYesNoCancel.getSingleton();
@@ -62,9 +62,6 @@ public class ToDoListController {
             if(manager.getName() != null || manager.getName() != "") {
             app.getGUI().updateToolbarControls(false);
             }
-         /*   if(manager.getName() == null) {
-                app.getGUI().updateToolbarControls(true);
-            }*/
         }  if(!myDiag.getToDid()) {
             AppMessageDialogSingleton error = AppMessageDialogSingleton.getSingleton();
             Stage newerStage = new Stage();
@@ -72,7 +69,7 @@ public class ToDoListController {
         }
         
     }
-    
+  //removes item, chcks to see if we should disable save or remove  
     public void processRemoveItem(ToDoItem editor) {
         Workspace workspace = (Workspace)app.getWorkspaceComponent();
 	workspace.reloadWorkspace();
@@ -80,16 +77,11 @@ public class ToDoListController {
         if(manager.getName() != null || manager.getName() != "") {
             app.getGUI().updateToolbarControls(false);
             }
-      /*  if(manager.getName() == null) {
-                app.getGUI().updateToolbarControls(true);
-            }*/
         AppYesNoCancelDialogSingleton myDiag = AppYesNoCancelDialogSingleton.getSingleton();
         Stage newStage = new Stage();
         
            
         myDiag.show(props.getProperty(PropertyType.REMOVE_ITEM),props.getProperty(PropertyType.REMOVE_ITEM) );
-       // ToDoItem myToDo;
-       // myToDo = manager.getItems().get(position);
         
         if(myDiag.getSelection().compareToIgnoreCase(props.getProperty(PropertyType.YES)) ==0) {
             manager.getItems().remove(editor);
@@ -98,24 +90,15 @@ public class ToDoListController {
             if(manager.getName() != null || manager.getName() != "") {
             app.getGUI().updateToolbarControls(false);
             }
-          /*  if(manager.getName() == null) {
-                app.getGUI().updateToolbarControls(true);
-            }*/
+
             if(manager.getItems().size() <1) {
                 workspace.disableRemove();
-            /*    if(manager.getName() != null || manager.getName() != "") {
-            app.getGUI().updateToolbarControls(true);
-            }*/
+
             }
             
-        } /* if(position == -1) {
-            AppMessageDialogSingleton error = AppMessageDialogSingleton.getSingleton();
-            Stage newerStage = new Stage();
-            error.show(props.getProperty(PropertyType.USER_DENIED), props.getProperty(PropertyType.NO_CHANGE));
-        }*/
-       // manager.getItems().set(position, editor);
+        } 
     }
-    
+    //moves item up, does  a button check
     public void processMoveUpItem(ToDoItem editor) {
         Workspace workspace = (Workspace)app.getWorkspaceComponent();
 	workspace.reloadWorkspace();
@@ -128,10 +111,9 @@ public class ToDoListController {
         if(manager.getName() != null || manager.getName() != "") {
             app.getGUI().updateToolbarControls(false);
             }
-    /*    if(manager.getName() == null) {
-                app.getGUI().updateToolbarControls(true);
-            }*/
+
     }
+    //some code for checking if we should disable up or down
     public void checkDisables(ToDoItem editor) {
         Workspace workspace = (Workspace)app.getWorkspaceComponent();
 	
@@ -158,6 +140,7 @@ public class ToDoListController {
             workspace.disableDown();
         }
     }
+    //remnant code that we may want to use later
     public void pressName(String name) {
         Workspace workspace = (Workspace)app.getWorkspaceComponent();
         DataManager manager = (DataManager)app.getDataComponent();
@@ -168,7 +151,7 @@ public class ToDoListController {
         DataManager manager = (DataManager)app.getDataComponent();
         manager.setOwner(owner);
     }
-    
+    //moves item down, does necessary checks
     public void processMoveDownItem(ToDoItem editor) {
         Workspace workspace = (Workspace)app.getWorkspaceComponent();
 	workspace.reloadWorkspace();
@@ -181,11 +164,8 @@ public class ToDoListController {
         if(manager.getName() != null || manager.getName() != "") {
             app.getGUI().updateToolbarControls(false);
             }
-   /*     if(manager.getName() == null) {
-                app.getGUI().updateToolbarControls(true);
-            } */
     }
-    
+    //starts new edit dialog, does proper checks
     public void processEditItem(ToDoItem editor) {
         Workspace workspace = (Workspace)app.getWorkspaceComponent();
 	workspace.reloadWorkspace();
@@ -205,9 +185,7 @@ public class ToDoListController {
             if(manager.getName() != null || manager.getName() != "") {
             app.getGUI().updateToolbarControls(false);
             }
-         /*   if(manager.getName() == null) {
-                app.getGUI().updateToolbarControls(true);
-            }*/
+
             
         }  if(!myDiag.getToDid() || position == -1) {
             AppMessageDialogSingleton error = AppMessageDialogSingleton.getSingleton();

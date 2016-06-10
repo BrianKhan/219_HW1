@@ -8,6 +8,7 @@ package tdlm;
 /**
  *
  * @author McKillaGorilla
+ * @author GenghisKhan
  */
 public enum PropertyType {
     WORKSPACE_HEADING_LABEL,
@@ -29,7 +30,7 @@ public enum PropertyType {
     
     MOVE_DOWN_ICON, 
     MOVE_DOWN_ITEM_TOOLTIP,
-    
+    //added some custom enums
     CATEGORY_COLUMN_HEADING,
     DESCRIPTION_COLUMN_HEADING,
     START_DATE_COLUMN_HEADING,
