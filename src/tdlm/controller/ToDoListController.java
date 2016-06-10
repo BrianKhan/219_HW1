@@ -23,6 +23,8 @@ import saf.ui.AppYesNoCancelDialogSingleton;
 import tdlm.PropertyType;
 import tdlm.data.ToDoItem;
 import tdlm.dialog.AddYesNoCancel;
+import tdlm.dialog.EditYesNo;
+import tdlm.dialog.RemoveYesNo;
 
 /**
  * This class responds to interactions with todo list editing controls.
@@ -34,6 +36,8 @@ public class ToDoListController {
     AppTemplate app;
     AddYesNoCancel myDiag;
     PropertiesManager props;
+    AppMessageDialogSingleton error;
+    int position;
     public ToDoListController(AppTemplate initApp) {
 	app = initApp;
         props = PropertiesManager.getPropertiesManager();
@@ -53,16 +57,44 @@ public class ToDoListController {
         myDiag.show(props.getProperty(PropertyType.ADD_TITLE));
         ToDoItem myToDo;
         DataManager manager = (DataManager)app.getDataComponent();
-        if(myDiag.getSelection().compareToIgnoreCase(props.getProperty(PropertyType.YES)) ==0) {
+        if(myDiag.getSelection().compareToIgnoreCase(props.getProperty(PropertyType.YES)) ==0 && myDiag.getToDid()) {
             myToDo = myDiag.getToDo();
             manager.addItem(myToDo);
-        } else {
+            workspace.enableRemove();
+        }  if(!myDiag.getToDid()) {
+            AppMessageDialogSingleton error = AppMessageDialogSingleton.getSingleton();
+            Stage newerStage = new Stage();
+            error.show(props.getProperty(PropertyType.USER_DENIED), props.getProperty(PropertyType.NO_WORK));
         }
         
     }
     
-    public void processRemoveItem() {
+    public void processRemoveItem(ToDoItem editor) {
+        Workspace workspace = (Workspace)app.getWorkspaceComponent();
+	workspace.reloadWorkspace();
+        AppYesNoCancelDialogSingleton myDiag = AppYesNoCancelDialogSingleton.getSingleton();
+        Stage newStage = new Stage();
         
+           
+        myDiag.show(props.getProperty(PropertyType.REMOVE_ITEM),props.getProperty(PropertyType.REMOVE_ITEM) );
+       // ToDoItem myToDo;
+        DataManager manager = (DataManager)app.getDataComponent();
+       // myToDo = manager.getItems().get(position);
+        
+        if(myDiag.getSelection().compareToIgnoreCase(props.getProperty(PropertyType.YES)) ==0) {
+            manager.getItems().remove(editor);
+           position = manager.getItems().lastIndexOf(editor);
+            manager.getItems().remove(editor);
+            if(manager.getItems().size() <1) {
+                workspace.disableRemove();
+            }
+            
+        } /* if(position == -1) {
+            AppMessageDialogSingleton error = AppMessageDialogSingleton.getSingleton();
+            Stage newerStage = new Stage();
+            error.show(props.getProperty(PropertyType.USER_DENIED), props.getProperty(PropertyType.NO_CHANGE));
+        }*/
+       // manager.getItems().set(position, editor);
     }
     
     public void processMoveUpItem() {
@@ -73,7 +105,27 @@ public class ToDoListController {
         
     }
     
-    public void processEditItem() {
+    public void processEditItem(ToDoItem editor) {
+        Workspace workspace = (Workspace)app.getWorkspaceComponent();
+	workspace.reloadWorkspace();
+        EditYesNo myDiag = EditYesNo.getSingleton();
+        Stage newStage = new Stage();
+        myDiag.init(newStage);
+           
+        myDiag.show(props.getProperty(PropertyType.EDIT_ITEM));
+       // ToDoItem myToDo;
+        DataManager manager = (DataManager)app.getDataComponent();
+       // myToDo = manager.getItems().get(position);
         
+        if(myDiag.getSelection().compareToIgnoreCase(props.getProperty(PropertyType.YES)) ==0 && myDiag.getToDid()) {
+           position = manager.getItems().lastIndexOf(editor);
+            editor = myDiag.getToDo();
+            
+        }  if(!myDiag.getToDid() || position == -1) {
+            AppMessageDialogSingleton error = AppMessageDialogSingleton.getSingleton();
+            Stage newerStage = new Stage();
+            error.show(props.getProperty(PropertyType.USER_DENIED), props.getProperty(PropertyType.NO_WORK));
+        }
+        manager.getItems().set(position, editor);
     }
 }

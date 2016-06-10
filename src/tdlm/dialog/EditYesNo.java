@@ -32,9 +32,9 @@ import tdlm.data.ToDoItem;
  * @author Brian Khaneyan
  * @version 1.0
  */
-public class AddYesNoCancel extends Stage {
+public class EditYesNo extends Stage {
     // HERE'S THE SINGLETON
-    static AddYesNoCancel singleton;
+    static EditYesNo singleton;
     
     // GUI CONTROLS FOR OUR DIALOG
     VBox messagePane;
@@ -73,6 +73,7 @@ public class AddYesNoCancel extends Stage {
     String YES;
     String NO;
     Boolean toDid;
+    int row;
     // CONSTANT CHOICES
 
     /**
@@ -91,11 +92,11 @@ public class AddYesNoCancel extends Stage {
      * 
      * @param primaryStage The owner of this modal dialog.
      */
-    private AddYesNoCancel() {
+    private EditYesNo() {
         props = PropertiesManager.getPropertiesManager();
         YES = props.getProperty(PropertyType.YES);
         NO = props.getProperty(PropertyType.NO);
-        toDid = null;
+        
     }
     
     /**
@@ -103,9 +104,9 @@ public class AddYesNoCancel extends Stage {
      * 
      * @return The singleton object for this type.
      */
-    public static AddYesNoCancel getSingleton() {
+    public static EditYesNo getSingleton() {
 	if (singleton == null)
-	    singleton = new AddYesNoCancel();
+	    singleton = new EditYesNo();
 	return singleton;
     }
 	
@@ -152,8 +153,8 @@ public class AddYesNoCancel extends Stage {
 	// MAKE THE EVENT HANDLER FOR THESE BUTTONS
         EventHandler yesNoCancelHandler = (EventHandler<ActionEvent>) (ActionEvent ae) -> {
             Button sourceButton = (Button)ae.getSource();
-            AddYesNoCancel.this.selection = sourceButton.getText();
-            AddYesNoCancel.this.hide();
+            EditYesNo.this.selection = sourceButton.getText();
+            EditYesNo.this.hide();
         };
         
 	// AND THEN REGISTER THEM TO RESPOND TO INTERACTIONS

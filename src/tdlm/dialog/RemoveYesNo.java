@@ -32,9 +32,9 @@ import tdlm.data.ToDoItem;
  * @author Brian Khaneyan
  * @version 1.0
  */
-public class AddYesNoCancel extends Stage {
+public class RemoveYesNo extends Stage {
     // HERE'S THE SINGLETON
-    static AddYesNoCancel singleton;
+    static RemoveYesNo singleton;
     
     // GUI CONTROLS FOR OUR DIALOG
     VBox messagePane;
@@ -73,6 +73,7 @@ public class AddYesNoCancel extends Stage {
     String YES;
     String NO;
     Boolean toDid;
+    int row;
     // CONSTANT CHOICES
 
     /**
@@ -91,11 +92,11 @@ public class AddYesNoCancel extends Stage {
      * 
      * @param primaryStage The owner of this modal dialog.
      */
-    private AddYesNoCancel() {
+    private RemoveYesNo() {
         props = PropertiesManager.getPropertiesManager();
         YES = props.getProperty(PropertyType.YES);
         NO = props.getProperty(PropertyType.NO);
-        toDid = null;
+        
     }
     
     /**
@@ -103,9 +104,9 @@ public class AddYesNoCancel extends Stage {
      * 
      * @return The singleton object for this type.
      */
-    public static AddYesNoCancel getSingleton() {
+    public static RemoveYesNo getSingleton() {
 	if (singleton == null)
-	    singleton = new AddYesNoCancel();
+	    singleton = new RemoveYesNo();
 	return singleton;
     }
 	
@@ -128,20 +129,20 @@ public class AddYesNoCancel extends Stage {
         initOwner(primaryStage);
         }
         // LABELS AND TEXT FIELDS
-        categoryLabel = new Label(props.getProperty(PropertyType.CATEGORY));        
-        descriptionLabel = new Label(props.getProperty(PropertyType.DESCRIPTION));
-        startLabel = new Label(props.getProperty(PropertyType.START_DATE));
-        endLabel = new Label(props.getProperty(PropertyType.END_DATE));
-        completedLabel = new Label(props.getProperty(PropertyType.COMPLETED));
+      //  categoryLabel = new Label(props.getProperty(PropertyType.CATEGORY));        
+     //   descriptionLabel = new Label(props.getProperty(PropertyType.DESCRIPTION));
+       // startLabel = new Label(props.getProperty(PropertyType.START_DATE));
+       // endLabel = new Label(props.getProperty(PropertyType.END_DATE));
+      //  completedLabel = new Label(props.getProperty(PropertyType.COMPLETED));
         
-        catField = new TextField();
-        descriptionField = new TextField();
+      //  catField = new TextField();
+      //  descriptionField = new TextField();
         
        // startField = new TextField();
        // endField = new TextField();
-        startDate = new DatePicker();
-        endDate = new DatePicker();
-        checkField  = new  CheckBox();
+      //  startDate = new DatePicker();
+      //  endDate = new DatePicker();
+      //  checkField  = new  CheckBox();
         
         
         // YES, NO, AND CANCEL BUTTONS
@@ -152,8 +153,8 @@ public class AddYesNoCancel extends Stage {
 	// MAKE THE EVENT HANDLER FOR THESE BUTTONS
         EventHandler yesNoCancelHandler = (EventHandler<ActionEvent>) (ActionEvent ae) -> {
             Button sourceButton = (Button)ae.getSource();
-            AddYesNoCancel.this.selection = sourceButton.getText();
-            AddYesNoCancel.this.hide();
+            RemoveYesNo.this.selection = sourceButton.getText();
+            RemoveYesNo.this.hide();
         };
         
 	// AND THEN REGISTER THEM TO RESPOND TO INTERACTIONS
@@ -163,30 +164,30 @@ public class AddYesNoCancel extends Stage {
         
         // CATEGORY HBOX
         catBox = new HBox();
-        catBox.getChildren().add(categoryLabel);
-        catBox.getChildren().add(catField = new TextField());
+       // catBox.getChildren().add(categoryLabel);
+       // catBox.getChildren().add(catField = new TextField());
         
         // DESCRIPTION HBOX
         descriptionBox = new HBox();
-        descriptionBox.getChildren().add(descriptionLabel);
-        descriptionBox.getChildren().add(descriptionField);
+       // descriptionBox.getChildren().add(descriptionLabel);
+       // descriptionBox.getChildren().add(descriptionField);
         
         // START HBOX
         startBox = new HBox();
-        startBox.getChildren().add(startLabel);
+       // startBox.getChildren().add(startLabel);
        // startBox.getChildren().add(startField);
-       startBox.getChildren().add(startDate);
+     //  startBox.getChildren().add(startDate);
         
         // END HBOX
         endBox = new HBox();
-        endBox.getChildren().add(endLabel);
+      //  endBox.getChildren().add(endLabel);
        // endBox.getChildren().add(endField);
-       endBox.getChildren().add(endDate);
+      // endBox.getChildren().add(endDate);
         
         // COMPLETED HBOX
         completedBox = new HBox();
-        completedBox.getChildren().add(completedLabel);
-        completedBox.getChildren().add(checkField);
+       // completedBox.getChildren().add(completedLabel);
+       // completedBox.getChildren().add(checkField);
         
         
         // NOW ORGANIZE OUR BUTTONS
@@ -198,11 +199,11 @@ public class AddYesNoCancel extends Stage {
         // WE'LL PUT EVERYTHING HERE
         messagePane = new VBox();
         messagePane.setAlignment(Pos.CENTER);
-        messagePane.getChildren().add(catBox);
-        messagePane.getChildren().add(descriptionBox);
-        messagePane.getChildren().add(startBox);
-        messagePane.getChildren().add(endBox);
-        messagePane.getChildren().add(completedBox);
+      //  messagePane.getChildren().add(catBox);
+       // messagePane.getChildren().add(descriptionBox);
+       // messagePane.getChildren().add(startBox);
+       // messagePane.getChildren().add(endBox);
+       // messagePane.getChildren().add(completedBox);
         
         messagePane.getChildren().add(buttonBox);
         

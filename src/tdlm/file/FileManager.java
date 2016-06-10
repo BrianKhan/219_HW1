@@ -46,6 +46,7 @@ public class FileManager implements AppFileComponent {
     static final String JSON_OWNER = "owner";
     static final String JSON_ITEMS = "items";
     
+    
     /**
      * This method is for saving user work.
      * 
@@ -61,6 +62,7 @@ public class FileManager implements AppFileComponent {
     public void saveData(AppDataComponent data, String filePath) throws IOException {
 	// GET THE DATA
 	DataManager dataManager = (DataManager)data;
+        
 	
 	// FIRST THE LIST NAME AND OWNER
 	String name = dataManager.getName();

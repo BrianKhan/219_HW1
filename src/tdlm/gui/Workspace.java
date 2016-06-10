@@ -176,6 +176,7 @@ public class Workspace extends AppWorkspaceComponent {
         itemsBox.getChildren().add(itemsToolbar);
         itemsBox.getChildren().add(itemsTable);
         
+        
         // NOW SETUP THE TABLE COLUMNS
         itemCategoryColumn = new TableColumn(props.getProperty(PropertyType.CATEGORY_COLUMN_HEADING));
         itemDescriptionColumn = new TableColumn(props.getProperty(PropertyType.DESCRIPTION_COLUMN_HEADING));
@@ -219,7 +220,7 @@ public class Workspace extends AppWorkspaceComponent {
             
         });
         removeItemButton.setOnAction(e->{
-            toDoListController.processRemoveItem();
+            toDoListController.processRemoveItem(itemsTable.getSelectionModel().getSelectedItem());
         });
         moveUpItemButton.setOnAction(e->{
             toDoListController.processMoveUpItem();
@@ -230,9 +231,15 @@ public class Workspace extends AppWorkspaceComponent {
         
         itemsTable.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
-                toDoListController.processEditItem();
+                toDoListController.processEditItem(itemsTable.getSelectionModel().getSelectedItem());
             }
         });
+    }
+    public void enableRemove() {
+        removeItemButton.setDisable(false);
+    }
+    public void disableRemove() {
+        removeItemButton.setDisable(true);
     }
     
     public void setImage(ButtonBase button, String fileName) {
