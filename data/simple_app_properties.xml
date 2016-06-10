@@ -28,6 +28,9 @@
         <property name="REMOVE_ITEM"                value="Remove Item"></property>
         <property name="EDIT_ITEM"                value="Edit Item"></property>
         <property name="NO_CHANGE"                  value="No changes have been made"></property>
+        <property name="NAME_OWNER"                 value="Please fill out the name and owner fields"></property>
+        <property name="WOAH_THERE"                 value="Woah There!"></property>
+        <property name="EMPTY_ITEMS"                value="We are saving a list with one or more fields empty"></property>
         
         
 
@@ -75,6 +78,7 @@
 	<property name="LOAD_WORK_TITLE"		value="Select work file to load"></property>
 	<property name="WORK_FILE_EXT"			value="tdl"></property>
 	<property name="WORK_FILE_EXT_DESC"		value="To Do List Maker Files"></property>
+        <property name="PATH_WORK"                      value="/work"></property>
     </property_list>
     <property_options_list>
     </property_options_list>

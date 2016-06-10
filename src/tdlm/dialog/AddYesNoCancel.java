@@ -67,7 +67,7 @@ public class AddYesNoCancel extends Stage {
     
     Button yesButton;
     Button noButton;
-    Button cancelButton;
+  //  Button cancelButton;
     String selection;
     PropertiesManager props;
     String YES;
@@ -147,7 +147,7 @@ public class AddYesNoCancel extends Stage {
         // YES, NO, AND CANCEL BUTTONS
         yesButton = new Button(YES);
         noButton = new Button(NO);
-        cancelButton = new Button(CANCEL);
+        //cancelButton = new Button(CANCEL);
 	
 	// MAKE THE EVENT HANDLER FOR THESE BUTTONS
         EventHandler yesNoCancelHandler = (EventHandler<ActionEvent>) (ActionEvent ae) -> {
@@ -159,7 +159,7 @@ public class AddYesNoCancel extends Stage {
 	// AND THEN REGISTER THEM TO RESPOND TO INTERACTIONS
         yesButton.setOnAction(yesNoCancelHandler);
         noButton.setOnAction(yesNoCancelHandler);
-        cancelButton.setOnAction(yesNoCancelHandler);
+      //  cancelButton.setOnAction(yesNoCancelHandler);
         
         // CATEGORY HBOX
         catBox = new HBox();
@@ -193,7 +193,7 @@ public class AddYesNoCancel extends Stage {
         HBox buttonBox = new HBox();
         buttonBox.getChildren().add(yesButton);
         buttonBox.getChildren().add(noButton);
-        buttonBox.getChildren().add(cancelButton);
+       // buttonBox.getChildren().add(cancelButton);
         
         // WE'LL PUT EVERYTHING HERE
         messagePane = new VBox();

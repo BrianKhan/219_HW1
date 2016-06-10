@@ -22,10 +22,18 @@ import javax.json.JsonValue;
 import javax.json.JsonWriter;
 import javax.json.JsonWriterFactory;
 import javax.json.stream.JsonGenerator;
+import properties_manager.PropertiesManager;
 import saf.components.AppDataComponent;
 import saf.components.AppFileComponent;
+import saf.ui.AppMessageDialogSingleton;
+import static tdlm.PropertyType.EMPTY_ITEM;
+import static tdlm.PropertyType.NAME_OWNER;
+import static tdlm.PropertyType.USER_DENIED;
+import static tdlm.PropertyType.WOAH_THERE;
 import tdlm.data.DataManager;
 import tdlm.data.ToDoItem;
+import tdlm.gui.Workspace;
+
 
 /**
  * This class serves as the file management component for this application,
@@ -45,6 +53,8 @@ public class FileManager implements AppFileComponent {
     static final String JSON_NAME = "name";
     static final String JSON_OWNER = "owner";
     static final String JSON_ITEMS = "items";
+    PropertiesManager props;
+    
     
     
     /**
@@ -62,9 +72,17 @@ public class FileManager implements AppFileComponent {
     public void saveData(AppDataComponent data, String filePath) throws IOException {
 	// GET THE DATA
 	DataManager dataManager = (DataManager)data;
-        
-	
+        Workspace workspace = dataManager.getWorkspace();
+      //  dataManager.setOwner(dataManager.getWorkspace().getName());
+	//dataManager.getWorkspace().setFields(JSON_NAME, JSON_NAME);
 	// FIRST THE LIST NAME AND OWNER
+        if(dataManager.getName() == "" || dataManager.getOwner() == "") {
+            props = PropertiesManager.getPropertiesManager();
+        
+            AppMessageDialogSingleton error = AppMessageDialogSingleton.getSingleton();
+            error.show(props.getProperty(WOAH_THERE), props.getProperty(EMPTY_ITEM));
+        } 
+        else {
 	String name = dataManager.getName();
         String owner = dataManager.getOwner();
         
@@ -106,6 +124,8 @@ public class FileManager implements AppFileComponent {
 	PrintWriter pw = new PrintWriter(filePath);
 	pw.write(prettyPrinted);
 	pw.close();
+        }
+        
     }
     
     /**
@@ -133,9 +153,11 @@ public class FileManager implements AppFileComponent {
 	// LOAD LIST NAME AND OWNER
 	String name = json.getString(JSON_NAME);
 	String owner = json.getString(JSON_OWNER);
-	
 	// AND NOW LOAD ALL THE ITEMS
 	JsonArray jsonItemArray = json.getJsonArray(JSON_ITEMS);
+        dataManager.setName(name);
+        dataManager.setOwner(owner);
+        dataManager.changed(true);
 	for (int i = 0; i < jsonItemArray.size(); i++) {
 	    JsonObject jsonItem = jsonItemArray.getJsonObject(i);
 	    ToDoItem item = loadItem(jsonItem);

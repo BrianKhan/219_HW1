@@ -1,6 +1,7 @@
 package tdlm.data;
 
 import java.util.ArrayList;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -38,6 +39,8 @@ public class DataManager implements AppDataComponent {
     
     // THIS IS A SHARED REFERENCE TO THE APPLICATION
     AppTemplate app;
+    Workspace workspace;
+    boolean changed;
     
     /**
      * THis constructor creates the data manager and sets up the
@@ -49,6 +52,11 @@ public class DataManager implements AppDataComponent {
 	// KEEP THE APP FOR LATER
 	app = initApp;
         items = FXCollections.observableArrayList();
+        name = new SimpleStringProperty();
+        owner = new SimpleStringProperty();
+        Workspace workspace = (Workspace)app.getWorkspaceComponent();
+        changed = false;
+        
     }
     
     public ObservableList<ToDoItem> getItems() {
@@ -66,14 +74,31 @@ public class DataManager implements AppDataComponent {
     public void addItem(ToDoItem item) {
         items.add(item);
     }
-
-
+    public void setName(String myName) {
+        name.set(myName);
+    }
+    public void setOwner(String myOwner) {
+        owner.set(myOwner);
+    }
+    public Workspace getWorkspace() {
+        return workspace;
+    }
+    public void changed(boolean chang) {
+        changed = chang;
+    }
+    public boolean getChanged(){
+        return changed;
+    }
 
     /**
      * 
      */
     @Override
     public void reset() {
-
+        items.clear();
+        setName(getName());
+        setOwner(getOwner());
     }
+
+   
 }

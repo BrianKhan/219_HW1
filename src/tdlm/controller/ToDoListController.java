@@ -41,8 +41,6 @@ public class ToDoListController {
     public ToDoListController(AppTemplate initApp) {
 	app = initApp;
         props = PropertiesManager.getPropertiesManager();
-        
-        
     }
     
     public void processAddItem() {	
@@ -61,6 +59,12 @@ public class ToDoListController {
             myToDo = myDiag.getToDo();
             manager.addItem(myToDo);
             workspace.enableRemove();
+            if(manager.getName() != null || manager.getName() != "") {
+            app.getGUI().updateToolbarControls(false);
+            }
+         /*   if(manager.getName() == null) {
+                app.getGUI().updateToolbarControls(true);
+            }*/
         }  if(!myDiag.getToDid()) {
             AppMessageDialogSingleton error = AppMessageDialogSingleton.getSingleton();
             Stage newerStage = new Stage();
@@ -72,21 +76,36 @@ public class ToDoListController {
     public void processRemoveItem(ToDoItem editor) {
         Workspace workspace = (Workspace)app.getWorkspaceComponent();
 	workspace.reloadWorkspace();
+        DataManager manager = (DataManager)app.getDataComponent();
+        if(manager.getName() != null || manager.getName() != "") {
+            app.getGUI().updateToolbarControls(false);
+            }
+      /*  if(manager.getName() == null) {
+                app.getGUI().updateToolbarControls(true);
+            }*/
         AppYesNoCancelDialogSingleton myDiag = AppYesNoCancelDialogSingleton.getSingleton();
         Stage newStage = new Stage();
         
            
         myDiag.show(props.getProperty(PropertyType.REMOVE_ITEM),props.getProperty(PropertyType.REMOVE_ITEM) );
        // ToDoItem myToDo;
-        DataManager manager = (DataManager)app.getDataComponent();
        // myToDo = manager.getItems().get(position);
         
         if(myDiag.getSelection().compareToIgnoreCase(props.getProperty(PropertyType.YES)) ==0) {
             manager.getItems().remove(editor);
            position = manager.getItems().lastIndexOf(editor);
             manager.getItems().remove(editor);
+            if(manager.getName() != null || manager.getName() != "") {
+            app.getGUI().updateToolbarControls(false);
+            }
+          /*  if(manager.getName() == null) {
+                app.getGUI().updateToolbarControls(true);
+            }*/
             if(manager.getItems().size() <1) {
                 workspace.disableRemove();
+            /*    if(manager.getName() != null || manager.getName() != "") {
+            app.getGUI().updateToolbarControls(true);
+            }*/
             }
             
         } /* if(position == -1) {
@@ -97,12 +116,74 @@ public class ToDoListController {
        // manager.getItems().set(position, editor);
     }
     
-    public void processMoveUpItem() {
+    public void processMoveUpItem(ToDoItem editor) {
+        Workspace workspace = (Workspace)app.getWorkspaceComponent();
+	workspace.reloadWorkspace();
+        DataManager manager = (DataManager)app.getDataComponent();
+        ToDoItem temp = manager.getItems().get(manager.getItems().indexOf(editor)-1); 
+        int editorIndex = manager.getItems().indexOf(editor);
+        int tempIndex = manager.getItems().indexOf(temp);
+        manager.getItems().set(tempIndex, editor);
+        manager.getItems().set(editorIndex, temp);
+        if(manager.getName() != null || manager.getName() != "") {
+            app.getGUI().updateToolbarControls(false);
+            }
+    /*    if(manager.getName() == null) {
+                app.getGUI().updateToolbarControls(true);
+            }*/
+    }
+    public void checkDisables(ToDoItem editor) {
+        Workspace workspace = (Workspace)app.getWorkspaceComponent();
+	
+        DataManager manager = (DataManager)app.getDataComponent();
         
+        if(manager.getItems().indexOf(editor) == 0 &&manager.getItems().indexOf(editor) <1) {
+            
+            workspace.disableUp();
+        }
+        if(manager.getItems().indexOf(editor)+1 == manager.getItems().size()) {
+            
+            workspace.disableDown();
+        }
+        if(manager.getItems().indexOf(editor) +1 != manager.getItems().size()) {
+            
+            workspace.enableDown();
+        }
+        if(manager.getItems().indexOf(editor) >0 && manager.getItems().indexOf(editor)  != 0) {
+            
+            workspace.enableUp();
+        }
+        if(manager.getItems().indexOf(editor) ==-1) {
+            workspace.disableUp();
+            workspace.disableDown();
+        }
+    }
+    public void pressName(String name) {
+        Workspace workspace = (Workspace)app.getWorkspaceComponent();
+        DataManager manager = (DataManager)app.getDataComponent();
+        manager.setName(name);
+    }
+    public void pressOwner(String owner) {
+        Workspace workspace = (Workspace)app.getWorkspaceComponent();
+        DataManager manager = (DataManager)app.getDataComponent();
+        manager.setOwner(owner);
     }
     
-    public void processMoveDownItem() {
-        
+    public void processMoveDownItem(ToDoItem editor) {
+        Workspace workspace = (Workspace)app.getWorkspaceComponent();
+	workspace.reloadWorkspace();
+        DataManager manager = (DataManager)app.getDataComponent();
+        ToDoItem temp = manager.getItems().get(manager.getItems().indexOf(editor)+1); 
+        int editorIndex = manager.getItems().indexOf(editor);
+        int tempIndex = manager.getItems().indexOf(temp);
+        manager.getItems().set(tempIndex, editor);
+        manager.getItems().set(editorIndex, temp);
+        if(manager.getName() != null || manager.getName() != "") {
+            app.getGUI().updateToolbarControls(false);
+            }
+   /*     if(manager.getName() == null) {
+                app.getGUI().updateToolbarControls(true);
+            } */
     }
     
     public void processEditItem(ToDoItem editor) {
@@ -111,6 +192,7 @@ public class ToDoListController {
         EditYesNo myDiag = EditYesNo.getSingleton();
         Stage newStage = new Stage();
         myDiag.init(newStage);
+        myDiag.setOld(editor);
            
         myDiag.show(props.getProperty(PropertyType.EDIT_ITEM));
        // ToDoItem myToDo;
@@ -120,6 +202,12 @@ public class ToDoListController {
         if(myDiag.getSelection().compareToIgnoreCase(props.getProperty(PropertyType.YES)) ==0 && myDiag.getToDid()) {
            position = manager.getItems().lastIndexOf(editor);
             editor = myDiag.getToDo();
+            if(manager.getName() != null || manager.getName() != "") {
+            app.getGUI().updateToolbarControls(false);
+            }
+         /*   if(manager.getName() == null) {
+                app.getGUI().updateToolbarControls(true);
+            }*/
             
         }  if(!myDiag.getToDid() || position == -1) {
             AppMessageDialogSingleton error = AppMessageDialogSingleton.getSingleton();

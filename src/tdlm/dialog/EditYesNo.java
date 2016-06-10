@@ -55,6 +55,7 @@ public class EditYesNo extends Stage {
     DatePicker endDate;
     
     ToDoItem myItem;
+    ToDoItem old;
     
     Scene messageScene;
     
@@ -67,7 +68,7 @@ public class EditYesNo extends Stage {
     
     Button yesButton;
     Button noButton;
-    Button cancelButton;
+  //  Button cancelButton;
     String selection;
     PropertiesManager props;
     String YES;
@@ -84,7 +85,7 @@ public class EditYesNo extends Stage {
     /**
      *
      */
-    public static final String CANCEL = "Cancel";
+   // public static final String CANCEL = "Cancel";
     
     /**
      * Note that the constructor is private since it follows
@@ -148,7 +149,7 @@ public class EditYesNo extends Stage {
         // YES, NO, AND CANCEL BUTTONS
         yesButton = new Button(YES);
         noButton = new Button(NO);
-        cancelButton = new Button(CANCEL);
+      //  cancelButton = new Button(CANCEL);
 	
 	// MAKE THE EVENT HANDLER FOR THESE BUTTONS
         EventHandler yesNoCancelHandler = (EventHandler<ActionEvent>) (ActionEvent ae) -> {
@@ -160,7 +161,7 @@ public class EditYesNo extends Stage {
 	// AND THEN REGISTER THEM TO RESPOND TO INTERACTIONS
         yesButton.setOnAction(yesNoCancelHandler);
         noButton.setOnAction(yesNoCancelHandler);
-        cancelButton.setOnAction(yesNoCancelHandler);
+     //   cancelButton.setOnAction(yesNoCancelHandler);
         
         // CATEGORY HBOX
         catBox = new HBox();
@@ -194,7 +195,7 @@ public class EditYesNo extends Stage {
         HBox buttonBox = new HBox();
         buttonBox.getChildren().add(yesButton);
         buttonBox.getChildren().add(noButton);
-        buttonBox.getChildren().add(cancelButton);
+      //  buttonBox.getChildren().add(cancelButton);
         
         // WE'LL PUT EVERYTHING HERE
         messagePane = new VBox();
@@ -243,13 +244,20 @@ public class EditYesNo extends Stage {
     public boolean getToDid() {
         return toDid;
     }
+    public void setOld(ToDoItem oldtodo) {
+        old = oldtodo;
+    }
     
     public void show(String title) {
 	// SET THE DIALOG TITLE BAR TITLE
 	setTitle(title);
 	
 	// SET THE MESSAGE TO DISPLAY TO THE USER
-        
+        catField.setText(old.getCategory());
+        descriptionField.setText(old.getDescription());
+        startDate.setValue(old.getStartDate());
+        endDate.setValue(old.getEndDate());
+        checkField.setSelected(old.getCompleted());
 	
 	// AND OPEN UP THIS DIALOG, MAKING SURE THE APPLICATION
 	// WAITS FOR IT TO BE RESOLVED BEFORE LETTING THE USER

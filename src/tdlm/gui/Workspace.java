@@ -98,6 +98,7 @@ public class Workspace extends AppWorkspaceComponent {
     
     // FOR DISPLAYING DEBUG STUFF
     Text debugText;
+    boolean changed;
 
     /**
      * Constructor for initializing the workspace, note that this constructor
@@ -111,6 +112,7 @@ public class Workspace extends AppWorkspaceComponent {
     public Workspace(AppTemplate initApp) throws IOException {
 	// KEEP THIS FOR LATER
 	app = initApp;
+        changed = false;
 
 	// KEEP THE GUI FOR LATER
 	gui = app.getGUI();
@@ -125,11 +127,13 @@ public class Workspace extends AppWorkspaceComponent {
         myDiag = AddYesNoCancel.getSingleton();
         
         myDiag.init(gui.getWindow());
+        app.getGUI().updateToolbarControls(true);
         
     }
     
     private void layoutGUI() {
         PropertiesManager props = PropertiesManager.getPropertiesManager();
+        app.getGUI().updateToolbarControls(true);
         
 	// FIRST THE LABEL AT THE TOP
         headingLabel = new Label();
@@ -197,6 +201,10 @@ public class Workspace extends AppWorkspaceComponent {
         itemsTable.getColumns().add(itemCompletedColumn);
         DataManager dataManager = (DataManager)app.getDataComponent();
         itemsTable.setItems(dataManager.getItems());
+        
+        
+       
+        
 
 	// AND NOW SETUP THE WORKSPACE
 	workspace = new VBox();
@@ -215,31 +223,75 @@ public class Workspace extends AppWorkspaceComponent {
 	toDoListController = new ToDoListController(app);
 	
 	// NOW CONNECT THE BUTTONS TO THEIR HANDLERS
+        DataManager dataManager = (DataManager)app.getDataComponent();
         addItemButton.setOnAction(e->{
             toDoListController.processAddItem();
+            toDoListController.checkDisables(itemsTable.getSelectionModel().getSelectedItem());
+            changed = true;
+            
             
         });
         removeItemButton.setOnAction(e->{
             toDoListController.processRemoveItem(itemsTable.getSelectionModel().getSelectedItem());
+            toDoListController.checkDisables(itemsTable.getSelectionModel().getSelectedItem());
+            changed = true;
+            
         });
         moveUpItemButton.setOnAction(e->{
-            toDoListController.processMoveUpItem();
+            toDoListController.processMoveUpItem(itemsTable.getSelectionModel().getSelectedItem());
+            toDoListController.checkDisables(itemsTable.getSelectionModel().getSelectedItem());
+            changed = true;
+            
         });
         moveDownItemButton.setOnAction(e->{
-            toDoListController.processMoveDownItem();
+            toDoListController.processMoveDownItem(itemsTable.getSelectionModel().getSelectedItem());
+            toDoListController.checkDisables(itemsTable.getSelectionModel().getSelectedItem());
+            changed = true;
+            
         });
         
         itemsTable.setOnMouseClicked(e -> {
+            toDoListController.checkDisables(itemsTable.getSelectionModel().getSelectedItem());
             if (e.getClickCount() == 2) {
+                if(itemsTable.getSelectionModel().getSelectedItem() != null) {
                 toDoListController.processEditItem(itemsTable.getSelectionModel().getSelectedItem());
+                
+                }
             }
+            
         });
+        
+        gui.getPrimaryScene().setOnMouseMoved(e-> {
+                dataManager.setName(nameTextField.getText().toString());
+                dataManager.setOwner(ownerTextField.getText().toString());
+            if(ownerTextField.getText().length() ==0 || nameTextField.getText().length() == 0) {
+                app.getGUI().updateToolbarControls(true);
+        }
+            else {
+                app.getGUI().updateToolbarControls(false);
+            }
+            
+        });
+        
+     
     }
     public void enableRemove() {
         removeItemButton.setDisable(false);
     }
     public void disableRemove() {
         removeItemButton.setDisable(true);
+    }
+    public void disableUp() {
+       moveUpItemButton.setDisable(true);
+    }
+    public void disableDown() {
+        moveDownItemButton.setDisable(true);
+    }
+    public void enableUp() {
+        moveUpItemButton.setDisable(false);
+    }
+    public void enableDown() {
+        moveDownItemButton.setDisable(false);
     }
     
     public void setImage(ButtonBase button, String fileName) {
@@ -249,6 +301,26 @@ public class Workspace extends AppWorkspaceComponent {
 	
 	// SET THE IMAGE IN THE BUTTON
         button.setGraphic(new ImageView(buttonImage));	
+    }
+    public void clearFields() {
+        ownerTextField.setText("");
+        nameTextField.setText("");
+    }
+    public void setFields(String own, String nam) {
+        ownerTextField.setText(own);
+        nameTextField.setText(nam);
+    }
+    public String getName() {
+        if(nameTextField.getText() !=null) {
+        return nameTextField.getText();
+        }
+        return "";
+    }
+    public String getOwner() {
+        if(ownerTextField.getText() !=null) {
+        return ownerTextField.getText();
+        }
+        return "";
     }
 
     /**
@@ -282,9 +354,17 @@ public class Workspace extends AppWorkspaceComponent {
      * This function reloads all the controls for editing tag attributes into
      * the workspace.
      */
+    public void checkFields() {
+        DataManager dataManager = (DataManager)app.getDataComponent();
+        if(dataManager.getName() != null && dataManager.getOwner() != null) {
+            nameTextField.setText(dataManager.getName());
+            ownerTextField.setText(dataManager.getName());
+        }
+    }
     @Override
     public void reloadWorkspace() {
 	DataManager dataManager = (DataManager)app.getDataComponent();
-
+        app.getGUI().updateToolbarControls(true);
+        checkFields();
     }
 }
