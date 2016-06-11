@@ -59,7 +59,7 @@ public class Workspace extends AppWorkspaceComponent {
 
     // IT KNOWS THE GUI IT IS PLACED INSIDE
     AppGUI gui;
-    
+    int selection;
     // THIS CONTROLLER PROVIDES THE RESPONSES TO INTERACTIONS
     ToDoListController toDoListController;
     
@@ -100,6 +100,7 @@ public class Workspace extends AppWorkspaceComponent {
     // FOR DISPLAYING DEBUG STUFF
     Text debugText;
     boolean changed;
+    boolean selected;
 
     /**
      * Constructor for initializing the workspace, note that this constructor
@@ -114,7 +115,8 @@ public class Workspace extends AppWorkspaceComponent {
 	// KEEP THIS FOR LATER
 	app = initApp;
         changed = false;
-
+        selected = false;
+        selection = -1;
 	// KEEP THE GUI FOR LATER
 	gui = app.getGUI();
 
@@ -258,11 +260,11 @@ public class Workspace extends AppWorkspaceComponent {
         itemsTable.setOnMouseClicked(e -> {
             toDoListController.checkDisables(itemsTable.getSelectionModel().getSelectedItem());
             if (e.getClickCount() == 2) {
-                if(itemsTable.getSelectionModel().getSelectedItem() != null) {
+            if(itemsTable.getSelectionModel().getSelectedItem() != null) {
                 toDoListController.processEditItem(itemsTable.getSelectionModel().getSelectedItem());
-                
                 }
             }
+            
             
         });
         //whenever the mouse is moved we give info to our datamanager, no file is saved until the save button is pressed
@@ -354,6 +356,7 @@ public class Workspace extends AppWorkspaceComponent {
         ownerLabel.getStyleClass().add(CLASS_PROMPT_LABEL);
         itemsBox.getStyleClass().add(CLASS_BORDERED_PANE);
         itemsLabel.getStyleClass().add(CLASS_SUBHEADING_LABEL);
+        
         
         
         

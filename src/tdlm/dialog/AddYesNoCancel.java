@@ -21,6 +21,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import properties_manager.PropertiesManager;
+import saf.components.AppStyleArbiter;
+import static saf.components.AppStyleArbiter.CLASS_BORDERED_PANE;
+import static saf.components.AppStyleArbiter.CLASS_SUBHEADING_LABEL;
 import tdlm.PropertyType;
 import tdlm.data.ToDoItem;
 
@@ -130,7 +133,11 @@ public class AddYesNoCancel extends Stage {
         startLabel = new Label(props.getProperty(PropertyType.START_DATE));
         endLabel = new Label(props.getProperty(PropertyType.END_DATE));
         completedLabel = new Label(props.getProperty(PropertyType.COMPLETED));
-        
+        //css
+        descriptionLabel.getStyleClass().add(CLASS_SUBHEADING_LABEL);
+        startLabel.getStyleClass().add(CLASS_SUBHEADING_LABEL);
+        endLabel.getStyleClass().add(CLASS_SUBHEADING_LABEL);
+        completedLabel.getStyleClass().add(CLASS_SUBHEADING_LABEL);
         catField = new TextField();
         descriptionField = new TextField();
         
@@ -182,7 +189,6 @@ public class AddYesNoCancel extends Stage {
         completedBox = new HBox();
         completedBox.getChildren().add(completedLabel);
         completedBox.getChildren().add(checkField);
-        
         
         // NOW ORGANIZE OUR BUTTONS
         HBox buttonBox = new HBox();
@@ -243,6 +249,7 @@ public class AddYesNoCancel extends Stage {
      */
     public void show(String title) {
 	// SET THE DIALOG TITLE BAR TITLE
+        
 	setTitle(title);
 	
 	// SET THE MESSAGE TO DISPLAY TO THE USER

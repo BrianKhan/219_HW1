@@ -21,6 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import properties_manager.PropertiesManager;
+import static saf.components.AppStyleArbiter.CLASS_SUBHEADING_LABEL;
 import tdlm.PropertyType;
 import tdlm.data.ToDoItem;
 
@@ -135,7 +136,13 @@ public class EditYesNo extends Stage {
         startLabel = new Label(props.getProperty(PropertyType.START_DATE));
         endLabel = new Label(props.getProperty(PropertyType.END_DATE));
         completedLabel = new Label(props.getProperty(PropertyType.COMPLETED));
-        
+        //css
+        descriptionLabel.getStyleClass().add(CLASS_SUBHEADING_LABEL);
+        startLabel.getStyleClass().add(CLASS_SUBHEADING_LABEL);
+        endLabel.getStyleClass().add(CLASS_SUBHEADING_LABEL);
+        completedLabel.getStyleClass().add(CLASS_SUBHEADING_LABEL);
+        catField = new TextField();
+        descriptionField = new TextField();
         catField = new TextField();
         descriptionField = new TextField();
         
